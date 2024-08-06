@@ -21,7 +21,8 @@ const jobsCtrl = {
   createJob: async (body: Job) => {
     const id = crypto.randomUUID()
     await db.sql`CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, title TEXT, description TEXT)`
-    await db.sql`INSERT INTO jobs (id, title, description) VALUES ( ${id}, ${body.title}, ${body.description})`
+    const rs = await db.sql`INSERT INTO jobs (id, title, description) VALUES ( ${id}, ${body.title}, ${body.description})`
+    console.log(rs)
     return {
       id,
       title: body.title,
@@ -31,12 +32,14 @@ const jobsCtrl = {
     // return fakeData
   },
   getJobs: async (query: any) => {
+    await db.sql`CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, title TEXT, description TEXT)`
     // db.sql`DROP TABLE IF EXISTS jobs`
     const rows = await db.sql`SELECT * FROM jobs`
     const count = await db.sql`SELECT COUNT(*) FROM jobs`
 
+
     return {
-      rows: rows?.rows as Job[],
+      rows: rows?.rows?.results as Job[],
       count: count?.rows?.[0]?.['COUNT(*)'] as number
     }
   },

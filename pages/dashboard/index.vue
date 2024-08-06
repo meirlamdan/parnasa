@@ -3,6 +3,7 @@ definePageMeta({
   layout: 'dashboard',
   redirect: '/dashboard/jobs'
 })
+
 </script>
 
 
