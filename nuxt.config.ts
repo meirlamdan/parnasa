@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   nitro: {
     experimental: {
       database: true
+    },
+    prerender: {
+      autoSubfolderIndex: false
     }
   },
   app: {
