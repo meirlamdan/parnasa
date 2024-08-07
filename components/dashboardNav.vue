@@ -7,11 +7,11 @@ const links = [
     icon: 'i-heroicons-chart-bar',
     to: '/dashboard/jobs'
   },
-  {
-    label: 'users',
-    icon: 'i-heroicons-users',
-    to: '/dashboard/users'
-  }
+  // {
+  //   label: 'users',
+  //   icon: 'i-heroicons-users',
+  //   to: '/dashboard/users'
+  // }
 ]
 </script>
 

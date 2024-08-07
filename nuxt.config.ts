@@ -12,14 +12,14 @@ export default defineNuxtConfig({
       default: {
         connector: 'cloudflare-d1',
         options: {
-          bindingName: "DB"
+          bindingName: process.env.DB || "DB",
         }
       }
     }
   },
   app: {
     head: {
-      htmlAttrs: { dir: 'rtl', lang: 'he' },
+      htmlAttrs: { dir: 'rtl', lang: 'he', style: 'scroll-padding-top: 117px; scroll-behavior: smooth;' },
     },
   },
   devtools: { enabled: true },

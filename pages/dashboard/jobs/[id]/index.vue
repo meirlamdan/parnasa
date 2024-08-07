@@ -2,6 +2,7 @@
 
 const { id } = useRoute().params
 const { data } = await useFetch(`/api/jobs/${id}`)
+console.log(data.value);
 
 const deleteItem = async () => {
   if (!confirm('are you sure?')) return
@@ -17,7 +18,7 @@ const deleteItem = async () => {
   <UCard>
     <template #header>
       <div class="flex gap-2 justify-end">
-        <UButton label="edit" @click="navigateTo({ path: `/dashboard/jobs/${id}/edit` })" />
+        <UButton label="edit" @click="navigateTo(`/dashboard/jobs/${id}/edit`)" />
         <UButton label="delete" @click="deleteItem()" />
       </div>
     </template>

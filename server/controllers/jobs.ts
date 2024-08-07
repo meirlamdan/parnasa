@@ -37,15 +37,14 @@ const jobsCtrl = {
     const rows = await db.sql`SELECT * FROM jobs`
     const count = await db.sql`SELECT COUNT(*) FROM jobs`
 
-
     return {
       rows: rows?.rows?.results as Job[],
-      count: count?.rows?.[0]?.['COUNT(*)'] as number
+      count: count?.rows?.results?.[0]?.['COUNT(*)'] as number
     }
   },
   getJobById: async (id: Job['id']) => {
-    const Job = await db.sql`SELECT * FROM jobs WHERE id = ${id}`
-    return Job?.rows?.[0] as Job
+    const Job = await db.sql`SELECT * FROM jobs WHERE id = ${id}`    
+    return Job?.rows?.results?.[0] as Job
   },
   updateJob: async (id: Job['id'], body: Job) => {
     const Job = await db.sql`UPDATE jobs SET title = ${body.title}, description = ${body.description} WHERE id = ${id}`

@@ -17,6 +17,7 @@
     "nuxt": "^3.12.4"
   },
   "dependencies": {
+    "vue-countup-v3": "^1.4.2",
     "wrangler": "^3.69.1"
   }
 }

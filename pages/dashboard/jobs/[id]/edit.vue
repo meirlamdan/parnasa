@@ -51,7 +51,7 @@ const save = async () => {
 </script>
 
 <template>
-  <DashboardHeader :title="id ? 'edit item' : 'add item'" :breadcrumb="['items']" />
+  <!-- <DashboardHeader :title="id ? 'edit item' : 'add item'" :breadcrumb="['items']" /> -->
   <UForm :validate="validate" :state="model" @submit="save" @error="onError">
     <UCard>
       <template #header>
@@ -72,7 +72,7 @@ const save = async () => {
       <template #footer>
         <div class="flex gap-2 w-full justify-center">
           <UButton type="submit">save</UButton>
-          <UButton variant="outline" @click="navigateTo('/dashboard/items')">cancel</UButton>
+          <UButton variant="outline" @click="navigateTo('/dashboard/jobs')">cancel</UButton>
         </div>
       </template>
     </UCard>
