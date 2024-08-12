@@ -19,9 +19,43 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      htmlAttrs: { dir: 'rtl', lang: 'he', style: 'scroll-padding-top: 117px; scroll-behavior: smooth;' },
+      htmlAttrs: {
+        dir: 'rtl',
+        lang: 'he',
+        style: 'scroll-padding-top: 117px; scroll-behavior: smooth;'
+      },
     },
   },
   devtools: { enabled: true },
-  modules: ['@nuxt/ui', 'nitro-cloudflare-dev']
+  i18n: {
+    legacy: false,
+    langDir: 'lang',
+    lazy: true,
+    defaultLocale: 'he',
+    strategy: 'no_prefix',
+    locale: 'he',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      alwaysRedirect: true
+    },
+    locales: [
+      {
+        code: 'he',
+        iso: 'he-IL',
+        name: 'עברית',
+        file: 'he.js',
+        dir: 'rtl'
+      },
+      {
+        code: 'en',
+        iso: 'en-US',
+        name: 'English',
+        file: 'en.js',
+        dir: 'ltr'
+      }
+    ],
+
+  },
+  modules: ['@nuxt/ui', 'nitro-cloudflare-dev', "@nuxtjs/i18n"]
 })
