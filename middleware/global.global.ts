@@ -1,15 +1,9 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  // const { getUserBySession, user, isAdmin } = useAuth()
-
-  // await getUserBySession()
+  const { loggedIn } = useUserSession()
   if (to.path.startsWith('/dashboard')) {
-    
-    // if (!user.value?.id) {
-    //   return navigateTo('/login')
-    // }
-    // if (!isAdmin) {
-    //   return navigateTo('/')
-    // }
+    if (!loggedIn.value) {
+      return navigateTo('/login')
+    }
     to.meta.layout = 'dashboard'
   }
 })
