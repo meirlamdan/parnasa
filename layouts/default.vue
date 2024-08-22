@@ -56,8 +56,8 @@ const head = useLocaleHead({
               </div>
             </template>
           </UPopover>
-          <USelect class="-mt-14 ms-auto hidden sm:block" variant="none" size="sm" v-model="locale" @change="setLocale"
-            :options="langs" option-attribute="name" />
+          <USelect class="-mt-14 ms-auto hidden sm:block" variant="none" size="sm" v-model="locale" @change="setLocale(
+            locale)" :options="langs" option-attribute="name" />
         </div>
       </UContainer>
     </div>

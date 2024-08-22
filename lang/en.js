@@ -5,7 +5,6 @@ export default {
     contact: 'Contact',
     jobs: 'Our Jobs'
   },
-
   main: {
     title: 'Parnassah B’heter Uv’chavod',
     content: 'Earning a respectable livelihood, in accordance with halachah, lorm ipsum dolar sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam'
