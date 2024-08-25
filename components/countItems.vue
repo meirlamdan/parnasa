@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div> {{ `${(page - 1) * itemsPerPage + 1}-${(page - 1) * itemsPerPage +
-    itemsLength} of ${count}` }}
+    itemsLength} מתוך ${count}` }}
   </div>
 
 </template>
