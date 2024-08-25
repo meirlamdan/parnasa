@@ -7,7 +7,9 @@ const openLink = (id: string) => {
   navigateTo(`/dashboard/jobs/${id}`)
 }
 const filters = ref({
-  name: ''
+  job: '',
+  city: '',
+  id: ''
 })
 
 const query = computed(() => {
@@ -20,25 +22,47 @@ const query = computed(() => {
 })
 
 const { data: items, pending } = await useFetch('/api/jobs', {
-  query: query,
+  query
 })
 
 const columns = [
-  //   {
-  //   key: 'createdAt',
-  //   label: 'createdAt'
-  // },
   {
     key: 'id',
     label: 'ID'
   },
   {
-    key: 'title',
-    label: 'title'
-  }, {
+    key: 'job',
+    label: 'משרה'
+  },
+  {
     key: 'description',
-    label: 'description'
-  }]
+    label: 'תיאור',
+  },
+  {
+    key: 'hours',
+    label: 'שעות',
+  },
+  {
+    key: 'salary',
+    label: 'שכר',
+  },
+  {
+    key: 'requirements',
+    label: 'דרישות',
+  },
+  {
+    key: 'city',
+    label: 'עיר',
+  },
+  // {
+  //   key: 'created_at',
+  //   label: 'תאריך'
+  // },
+  // {
+  //   key: 'updated_at',
+  //   label: 'עודכן'
+  // }
+]
 
 watch(page, () => {
   navigateTo({ query: { page: page.value } })
@@ -52,10 +76,12 @@ watch(page, () => {
       <UCard>
         <template #header>
           <div class="flex justify-between">
-            <div>
-              <UInput v-model="filters.name" @change="page = 1" placeholder="search by name" />
+            <div class="flex gap-4">
+              <UInput v-model="filters.id" @change="page = 1" placeholder="סנן לפי ID" />
+              <UInput v-model="filters.job" @change="page = 1" placeholder="סנן לפי משרה" />
+              <UInput v-model="filters.city" @change="page = 1" placeholder="סנן לפי עיר" />
             </div>
-            <UButton label="add item" @click="navigateTo('/dashboard/jobs/add')" />
+            <UButton label="משרה חדשה" @click="navigateTo('/dashboard/jobs/add')" />
           </div>
 
         </template>

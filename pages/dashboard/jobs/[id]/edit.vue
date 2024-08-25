@@ -8,25 +8,39 @@ definePageMeta({
 const toast = useToast()
 
 const model = ref({
-  title: '',
+  id: '',
+  job: '',
   description: '',
+  hours: '',
+  salary: '',
+  requirements: '',
+  city: '',
+  created_at: '',
+  updated_at: '',
 })
 
 const id = useRoute().params.id
 if (id) {
   const { data } = await useFetch(`/api/jobs/${id}`)
   if (data.value) {
-    const { title, description } = data.value
-    model.value = { title, description }
+    Object.entries(data.value).forEach(([key, value]) => {
+      model.value[key as keyof typeof model.value] = value
+    })
   }
 }
 
 const validate = (state: any) => {
   const errors: FormError[] = []
-  if (!state.title) {
+  if (!state.id) {
     errors.push({
-      path: 'title',
-      message: 'title is required'
+      path: 'id',
+      message: 'שדה id הינו חובה'
+    })
+  }
+  if (!state.job) {
+    errors.push({
+      path: 'job',
+      message: 'שדה משרה הינו חובה'
     })
   }
   return errors
@@ -55,24 +69,45 @@ const save = async () => {
   <UForm :validate="validate" :state="model" @submit="save" @error="onError">
     <UCard>
       <template #header>
-        item details
+        פרטי משרה
       </template>
 
       <div class="flex gap-4">
-        <UFormGroup label="name" name="name">
-          <UInput v-model="model.title" />
+
+        <UFormGroup label="ID" name="id">
+          <UInput v-model="model.id" />
         </UFormGroup>
 
-        <UFormGroup label="description" name="description">
-          <UInput v-model="model.description" />
+        <UFormGroup label="משרה" name="job">
+          <UInput v-model="model.job" />
+        </UFormGroup>
+
+        <UFormGroup label="תיאור" name="description">
+          <UTextarea v-model="model.description" />
+        </UFormGroup>
+
+        <UFormGroup label="שעות עבודה" name="hours">
+          <UInput v-model="model.hours" />
+        </UFormGroup>
+
+        <UFormGroup label="שכר" name="salary">
+          <UInput v-model="model.salary" />
+        </UFormGroup>
+
+        <UFormGroup label="דרישות" name="requirements">
+          <UTextarea v-model="model.requirements" />
+        </UFormGroup>
+
+        <UFormGroup label="עיר" name="city">
+          <UInput v-model="model.city" />
         </UFormGroup>
       </div>
 
 
       <template #footer>
         <div class="flex gap-2 w-full justify-center">
-          <UButton type="submit">save</UButton>
-          <UButton variant="outline" @click="navigateTo('/dashboard/jobs')">cancel</UButton>
+          <UButton type="submit">שמור</UButton>
+          <UButton variant="outline" @click="navigateTo('/dashboard/jobs')">בטל</UButton>
         </div>
       </template>
     </UCard>

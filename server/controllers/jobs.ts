@@ -1,41 +1,45 @@
-// const fakeData = [
-//   {
-//     id: 'randomUUID',
-//     title: 'Job 1',
-//     description: 'Job 1 description',
-//     location: 'Job 1 location',
-//     type: 'Job 1 type',
-//     company: 'Job 1 company',
-//     date: 'Job 1 date',
-//   },
-// ]
-
 type Job = {
   id: string
-  title: string
-  description: string
+  job: string
+  description?: string
+  hours?: string,
+  salary?: string,
+  requirements?: string,
+  city?: string,
+  created_at?: string,
+  updated_at?: string
 }
+
 const db = useDatabase()
 
 const jobsCtrl = {
   createJob: async (body: Job) => {
-    const id = crypto.randomUUID()
-    await db.sql`CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, title TEXT, description TEXT)`
-    const rs = await db.sql`INSERT INTO jobs (id, title, description) VALUES ( ${id}, ${body.title}, ${body.description})`
-    console.log(rs)
+    const { id, job, description, hours, salary, requirements, city } = body
+    // const id = crypto.randomUUID()
+    await db.sql`INSERT INTO jobs (id, job, description, hours, salary, requirements, city) VALUES ( ${id}, ${job}, ${description}, ${hours}, ${salary}, ${requirements}, ${city})`
     return {
       id,
-      title: body.title,
-      description: body.description
+      job
     }
-
-    // return fakeData
   },
-  getJobs: async (query: any) => {
-    await db.sql`CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, title TEXT, description TEXT)`
-    // db.sql`DROP TABLE IF EXISTS jobs`
-    const rows = await db.sql`SELECT * FROM jobs`
-    const count = await db.sql`SELECT COUNT(*) FROM jobs`
+  getJobs: async (query: { limit: number, offset: number, order: string, filters: string} = {
+    limit: 10,
+    offset: 0,
+    order: 'createdAt DESC',
+    filters: '{}'
+  }) => {
+    let { limit, offset, order, filters } = query
+    filters = JSON.parse(filters)
+    let where = ''
+    if (Object.keys(filters).length) {
+      where = ['job', 'city', 'id'].map((column) => {
+        if (filters[column as keyof typeof filters]) {
+          return `${column} LIKE '%${filters[column as keyof typeof filters]}%'`
+        }
+      }).filter(Boolean).join(' AND ')
+    }
+    const rows = await db.sql`SELECT * FROM jobs {${where? `WHERE ${where}`: '' }} ORDER BY ${order} LIMIT ${limit} OFFSET ${offset}`
+    const count = await db.sql`SELECT COUNT(*) FROM jobs {${where? `WHERE ${where}`: '' }}`
 
     return {
       rows: rows?.rows?.results as Job[],
@@ -43,12 +47,19 @@ const jobsCtrl = {
     }
   },
   getJobById: async (id: Job['id']) => {
-    const Job = await db.sql`SELECT * FROM jobs WHERE id = ${id}`    
+    const Job = await db.sql`SELECT * FROM jobs WHERE id = ${id}`
     return Job?.rows?.results?.[0] as Job
   },
   updateJob: async (id: Job['id'], body: Job) => {
-    const Job = await db.sql`UPDATE jobs SET title = ${body.title}, description = ${body.description} WHERE id = ${id}`
-    // if(!Job.success) return
+    const columns = ['job', 'description', 'hours', 'salary', 'requirements', 'city']
+    let sqlSET = ''
+    columns.forEach((column) => {
+      if (body[column as keyof Job]) {
+        sqlSET += `${column} = '${body[column as keyof Job]}', `
+      }
+    })
+    sqlSET += `updated_at = datetime('now','localtime')`
+    await db.sql`UPDATE jobs SET {${sqlSET}} WHERE id = ${id}`
     return jobsCtrl.getJobById(id)
   }
 }
