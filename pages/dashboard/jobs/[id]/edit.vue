@@ -62,10 +62,20 @@ const save = async () => {
     navigateTo('/dashboard/jobs')
   }
 }
+const breadcrumb = [{
+  label: 'משרות', icon: 'i-heroicons-briefcase', to: '/dashboard/jobs'
+}]
+
+if(id) {
+  breadcrumb.push({
+    label: 'עריכת משרה', icon: 'i-heroicons-pencil', to: `/dashboard/jobs/${id}/edit`
+  })
+}
+
 </script>
 
 <template>
-  <!-- <DashboardHeader :title="id ? 'edit item' : 'add item'" :breadcrumb="['items']" /> -->
+  <titleAndBreadcrumbs :title="id ? 'עריכת משרה' : 'הוספת משרה'" :breadcrumb />
   <UForm :validate="validate" :state="model" @submit="save" @error="onError">
     <UCard>
       <template #header>

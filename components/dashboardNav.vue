@@ -4,21 +4,21 @@ const route = useRoute()
 const links = [
   {
     label: 'משרות',
-    icon: 'i-heroicons-chart-bar',
+    icon: 'i-tabler-briefcase',
     to: '/dashboard/jobs'
   },
-  // {
-  //   label: 'users',
-  //   icon: 'i-heroicons-users',
-  //   to: '/dashboard/users'
-  // }
+  {
+    label: 'שונות',
+    icon: 'i-tabler-star',
+    to: '/dashboard/'
+  }
 ]
 </script>
 
 <template>
   <div class="w-64 min-h-screen border-e border-gray-200 px-2">
     <div class="w-full p-8">
-      <img src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" width="100" alt="" class="mx-auto">
+      <img src="/logo.png" width="150" alt="" class="mx-auto">
     </div>
     <UVerticalNavigation :links="links" />
   </div>

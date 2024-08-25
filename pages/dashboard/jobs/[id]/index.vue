@@ -19,13 +19,19 @@ const cols = [
   { name: 'requirements', label: 'דרישות' },
   { name: 'city', label: 'עיר' },
   { name: 'created_at', label: 'תאריך יצירה' },
-  { name: 'updated_at', label: 'עודכן'},
+  { name: 'updated_at', label: 'עודכן' },
 ]
+
+const breadcrumb = [{
+  label: 'משרות', icon: 'i-heroicons-briefcase', to: '/dashboard/jobs'
+}, {
+  label: id
+}]
 </script>
 
 
 <template>
-  <!-- <DashboardHeader title="item details" :breadcrumb="['items']" /> -->
+  <titleAndBreadcrumbs title="פרטי משרה" :breadcrumb />
   <UCard>
     <template #header>
       <div class="flex gap-2 justify-end">
@@ -34,7 +40,7 @@ const cols = [
       </div>
     </template>
     <div class="flex gap-10 flex-wrap">
-      <ColValue v-for="col in cols" :key="col.name"  :label="col.label" :value="data?.[col.name]" />
+      <ColValue v-for="col in cols" :key="col.name" :label="col.label" :value="data?.[col.name]" />
     </div>
   </UCard>
 </template>

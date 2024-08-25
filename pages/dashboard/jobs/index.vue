@@ -53,25 +53,21 @@ const columns = [
   {
     key: 'city',
     label: 'עיר',
-  },
-  // {
-  //   key: 'created_at',
-  //   label: 'תאריך'
-  // },
-  // {
-  //   key: 'updated_at',
-  //   label: 'עודכן'
-  // }
+  }
 ]
 
 watch(page, () => {
   navigateTo({ query: { page: page.value } })
 })
 
+const breadcrumb = [{
+  label: 'משרות', icon: 'i-heroicons-briefcase', to: '/dashboard/jobs'
+}]
+
 </script>
 <template>
   <div>
-    <!-- <dashboardHeader title="items" :breadcrumb="['items']" /> -->
+    <titleAndBreadcrumbs title="משרות" :breadcrumb />
     <div>
       <UCard>
         <template #header>
