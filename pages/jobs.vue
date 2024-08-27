@@ -6,7 +6,7 @@ const { data } = await useFetch('/api/jobs')
   <div class="min-h-screen bg-gold-light text-blue-custom">
     <UContainer class="pt-36">
       <UAccordion v-if="data?.rows" class="max-w-2xl mx-auto"
-        :items="data?.rows.map((job) => ({ label: job.title, content: job.description, ...job }))">
+        :items="data?.rows.map((job) => ({ label: job.job, content: job.description, ...job }))">
         <!-- <template #default="{ item }">
           
         </template> -->

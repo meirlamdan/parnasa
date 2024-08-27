@@ -22,13 +22,8 @@ const jobsCtrl = {
       job
     }
   },
-  getJobs: async (query: { limit: number, offset: number, order: string, filters: string} = {
-    limit: 10,
-    offset: 0,
-    order: 'createdAt DESC',
-    filters: '{}'
-  }) => {
-    let { limit, offset, order, filters } = query
+  getJobs: async (query: { limit: number, offset: number, order: string, filters: string }) => {
+    let { limit = 10, offset = 0, order = 'createdAt DESC', filters = '{}' } = query || {}
     filters = JSON.parse(filters)
     let where = ''
     if (Object.keys(filters).length) {
@@ -38,8 +33,8 @@ const jobsCtrl = {
         }
       }).filter(Boolean).join(' AND ')
     }
-    const rows = await db.sql`SELECT * FROM jobs {${where? `WHERE ${where}`: '' }} ORDER BY ${order} LIMIT ${limit} OFFSET ${offset}`
-    const count = await db.sql`SELECT COUNT(*) FROM jobs {${where? `WHERE ${where}`: '' }}`
+    const rows = await db.sql`SELECT * FROM jobs {${where ? `WHERE ${where}` : ''}} ORDER BY ${order} LIMIT ${limit} OFFSET ${offset}`
+    const count = await db.sql`SELECT COUNT(*) FROM jobs {${where ? `WHERE ${where}` : ''}}`
 
     return {
       rows: rows?.rows?.results as Job[],
